@@ -1,0 +1,33 @@
+ifetcslab@ifetcslab-System-Product-Name:~$ nslookup umingel.com
+Server:		127.0.0.53
+Address:	127.0.0.53#53
+
+Non-authoritative answer:
+Name:	umingel.com
+Address: 162.255.119.205
+
+ifetcslab@ifetcslab-System-Product-Name:~$ nslookup -type=ns umingel.com
+Server:		127.0.0.53
+Address:	127.0.0.53#53
+
+Non-authoritative answer:
+umingel.com	nameserver = dns2.registrar-servers.com.
+umingel.com	nameserver = dns1.registrar-servers.com.
+
+Authoritative answers can be found from:
+
+ifetcslab@ifetcslab-System-Product-Name:~$ nslookup -type=mx umingel.com
+Server:		127.0.0.53
+Address:	127.0.0.53#53
+
+Non-authoritative answer:
+umingel.com	mail exchanger = 10 eforward3.registrar-servers.com.
+umingel.com	mail exchanger = 15 eforward4.registrar-servers.com.
+umingel.com	mail exchanger = 10 eforward1.registrar-servers.com.
+umingel.com	mail exchanger = 20 eforward5.registrar-servers.com.
+umingel.com	mail exchanger = 10 eforward2.registrar-servers.com.
+
+Authoritative answers can be found from:
+
+ifetcslab@ifetcslab-System-Product-Name:~$ 
+
