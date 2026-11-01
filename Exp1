@@ -1,0 +1,261 @@
+ifetcslab@ifetcslab-System-Product-Name:~$ nslookup google.com
+Server:		127.0.0.53
+Address:	127.0.0.53#53
+
+Non-authoritative answer:
+Name:	google.com
+Address: 142.250.206.14
+Name:	google.com
+Address: 2404:6800:4007:80f::200e
+
+ifetcslab@ifetcslab-System-Product-Name:~$ nslookup -type=ns google.com
+Server:		127.0.0.53
+Address:	127.0.0.53#53
+
+Non-authoritative answer:
+google.com	nameserver = ns4.google.com.
+google.com	nameserver = ns2.google.com.
+google.com	nameserver = ns3.google.com.
+google.com	nameserver = ns1.google.com.
+
+Authoritative answers can be found from:
+
+ifetcslab@ifetcslab-System-Product-Name:~$ nslookup -type=mx google.com
+Server:		127.0.0.53
+Address:	127.0.0.53#53
+
+Non-authoritative answer:
+google.com	mail exchanger = 10 smtp.google.com.
+ifetcslab@ifetcslab-System-Product-Name:~$ nslookup -type=text vulnweb.com
+unknown query type: text
+;; communications error to 127.0.0.53#53: timed out
+;; Got SERVFAIL reply from 127.0.0.53
+Server:		127.0.0.53
+Address:	127.0.0.53#53
+
+** server can't find vulnweb.com: SERVFAIL
+
+ifetcslab@ifetcslab-System-Product-Name:~$ nslookup -type=soa vulnweb.com
+;; Got SERVFAIL reply from 127.0.0.53
+Server:		127.0.0.53
+Address:	127.0.0.53#53
+
+** server can't find vulnweb.com: SERVFAIL
+
+ifetcslab@ifetcslab-System-Product-Name:~$ nslookup -type=ANY vulnweb.com 8.8.8.8
+;; Connection to 8.8.8.8#53(8.8.8.8) for vulnweb.com failed: host unreachable.
+;; no servers could be reached
+;; Connection to 8.8.8.8#53(8.8.8.8) for vulnweb.com failed: host unreachable.
+;; no servers could be reached
+;; Connection to 8.8.8.8#53(8.8.8.8) for vulnweb.com failed: host unreachable.
+;; no servers could be reached
+
+ifetcslab@ifetcslab-System-Product-Name:~$ nslookup vulnweb.com 8.8.8.8
+;; communications error to 8.8.8.8#53: timed out
+;; communications error to 8.8.8.8#53: timed out
+;; communications error to 8.8.8.8#53: timed out
+;; no servers could be reached
+
+ifetcslab@ifetcslab-System-Product-Name:~$ nslookup -debug vulnweb.com
+Server:		127.0.0.53
+Address:	127.0.0.53#53
+
+------------
+    QUESTIONS:
+	vulnweb.com, type = A, class = IN
+    ANSWERS:
+    ->  vulnweb.com
+	internet address = 44.228.249.3
+	ttl = 5336
+    AUTHORITY RECORDS:
+    ADDITIONAL RECORDS:
+------------
+Non-authoritative answer:
+Name:	vulnweb.com
+Address: 44.228.249.3
+------------
+    QUESTIONS:
+	vulnweb.com, type = AAAA, class = IN
+    ANSWERS:
+    AUTHORITY RECORDS:
+    ->  vulnweb.com
+	origin = ns-136.awsdns-17.com
+	mail addr = awsdns-hostmaster.amazon.com
+	serial = 1
+	refresh = 7200
+	retry = 900
+	expire = 1209600
+	minimum = 86400
+	ttl = 28
+    ADDITIONAL RECORDS:
+------------
+
+Authoritative answers can be found from:
+ifetcslab@ifetcslab-System-Product-Name:~$ whatweb google.com
+http://google.com [301 Moved Permanently] Country[UNITED STATES][US], HTTPServer[gws], IP[142.250.77.142], RedirectLocation[http://www.google.com/], Title[301 Moved], UncommonHeaders[content-security-policy-report-only,cache-status], Via-Proxy[1.1 tg42cdec (squid/6.9)], X-Frame-Options[SAMEORIGIN], X-XSS-Protection[0]
+http://www.google.com/ [200 OK] Cookies[AEC,NID,__Secure-STRP], Country[UNITED STATES][US], HTML5, HTTPServer[gws], HttpOnly[AEC,NID], IP[142.251.155.119], Script, Title[Google], UncommonHeaders[content-security-policy-report-only,cache-status], Via-Proxy[1.1 tg42cdec (squid/6.9)], X-Frame-Options[SAMEORIGIN], X-XSS-Protection[0]
+ifetcslab@ifetcslab-System-Product-Name:~$ whatweb -v google.com
+WhatWeb report for http://google.com
+Status    : 301 Moved Permanently
+Title     : 301 Moved
+IP        : 142.250.77.142
+Country   : UNITED STATES, US
+
+Summary   : HTTPServer[gws], RedirectLocation[http://www.google.com/], UncommonHeaders[content-security-policy-report-only,cache-status], Via-Proxy[1.1 tg42cdec (squid/6.9)], X-Frame-Options[SAMEORIGIN], X-XSS-Protection[0]
+
+Detected Plugins:
+[ HTTPServer ]
+	HTTP server header string. This plugin also attempts to 
+	identify the operating system from the server header. 
+
+	String       : gws (from server string)
+
+[ RedirectLocation ]
+	HTTP Server string location. used with http-status 301 and 
+	302 
+
+	String       : http://www.google.com/ (from location)
+
+[ UncommonHeaders ]
+	Uncommon HTTP server headers. The blacklist includes all 
+	the standard headers and many non standard but common ones. 
+	Interesting but fairly common headers should have their own 
+	plugins, eg. x-powered-by, server and x-aspnet-version. 
+	Info about headers can be found at www.http-stats.com 
+
+	String       : content-security-policy-report-only,cache-status (from headers)
+
+[ Via-Proxy ]
+	This plugin extracts the proxy server details from the Via 
+	param of the HTTP header. 
+
+	String       : 1.1 tg42cdec (squid/6.9)
+
+[ X-Frame-Options ]
+	This plugin retrieves the X-Frame-Options value from the 
+	HTTP header. - More Info: 
+	http://msdn.microsoft.com/en-us/library/cc288472%28VS.85%29.
+	aspx
+
+	String       : SAMEORIGIN
+
+[ X-XSS-Protection ]
+	This plugin retrieves the X-XSS-Protection value from the 
+	HTTP header. - More Info: 
+	http://msdn.microsoft.com/en-us/library/cc288472%28VS.85%29.
+	aspx
+
+	String       : 0
+
+HTTP Headers:
+	HTTP/1.1 301 Moved Permanently
+	Location: http://www.google.com/
+	Content-Type: text/html; charset=UTF-8
+	Content-Security-Policy-Report-Only: object-src 'none';base-uri 'self';script-src 'nonce-gsDTJ_ws_NeWGKKozf0pQA' 'strict-dynamic' 'report-sample' 'unsafe-eval' 'unsafe-inline' https: http:;report-uri https://csp.withgoogle.com/csp/gws/other-hp
+	Date: Fri, 10 Jul 2026 10:30:01 GMT
+	Expires: Sun, 09 Aug 2026 10:30:01 GMT
+	Cache-Control: public, max-age=2592000
+	Server: gws
+	Content-Length: 219
+	X-XSS-Protection: 0
+	X-Frame-Options: SAMEORIGIN
+	Age: 52
+	Cache-Status: tg42cdec;hit;detail=match
+	Via: 1.1 tg42cdec (squid/6.9)
+	Connection: close
+	
+WhatWeb report for http://www.google.com/
+Status    : 200 OK
+Title     : Google
+IP        : 142.251.157.119
+Country   : UNITED STATES, US
+
+Summary   : Cookies[AEC,NID,__Secure-STRP], HTML5, HTTPServer[gws], HttpOnly[AEC,NID], Script, UncommonHeaders[content-security-policy-report-only,cache-status], Via-Proxy[1.1 tg42cdec (squid/6.9)], X-Frame-Options[SAMEORIGIN], X-XSS-Protection[0]
+
+Detected Plugins:
+[ Cookies ]
+	Display the names of cookies in the HTTP headers. The 
+	values are not returned to save on space. 
+
+	String       : __Secure-STRP
+	String       : AEC
+	String       : NID
+
+[ HTML5 ]
+	HTML version 5, detected by the doctype declaration 
+
+
+[ HTTPServer ]
+	HTTP server header string. This plugin also attempts to 
+	identify the operating system from the server header. 
+
+	String       : gws (from server string)
+
+[ HttpOnly ]
+	If the HttpOnly flag is included in the HTTP set-cookie 
+	response header and the browser supports it then the cookie 
+	cannot be accessed through client side script - More Info: 
+	http://en.wikipedia.org/wiki/HTTP_cookie 
+
+	String       : AEC,NID
+
+[ Script ]
+	This plugin detects instances of script HTML elements and 
+	returns the script language/type. 
+
+
+[ UncommonHeaders ]
+	Uncommon HTTP server headers. The blacklist includes all 
+	the standard headers and many non standard but common ones. 
+	Interesting but fairly common headers should have their own 
+	plugins, eg. x-powered-by, server and x-aspnet-version. 
+	Info about headers can be found at www.http-stats.com 
+
+	String       : content-security-policy-report-only,cache-status (from headers)
+
+[ Via-Proxy ]
+	This plugin extracts the proxy server details from the Via 
+	param of the HTTP header. 
+
+	String       : 1.1 tg42cdec (squid/6.9)
+
+[ X-Frame-Options ]
+	This plugin retrieves the X-Frame-Options value from the 
+	HTTP header. - More Info: 
+	http://msdn.microsoft.com/en-us/library/cc288472%28VS.85%29.
+	aspx
+
+	String       : SAMEORIGIN
+
+[ X-XSS-Protection ]
+	This plugin retrieves the X-XSS-Protection value from the 
+	HTTP header. - More Info: 
+	http://msdn.microsoft.com/en-us/library/cc288472%28VS.85%29.
+	aspx
+
+	String       : 0
+
+HTTP Headers:
+	HTTP/1.1 200 OK
+	Content-Type: text/html; charset=ISO-8859-1
+	Date: Fri, 10 Jul 2026 10:30:54 GMT
+	Expires: -1
+	Cache-Control: private, max-age=0
+	Content-Security-Policy-Report-Only: object-src 'none';base-uri 'self';script-src 'nonce-6saAV3o9yP2YbJ5xni84kw' 'strict-dynamic' 'report-sample' 'unsafe-eval' 'unsafe-inline' https: http:;report-uri https://csp.withgoogle.com/csp/gws/other-hp
+	P3P: CP="This is not a P3P policy! See g.co/p3phelp for more info."
+	Content-Encoding: gzip
+	Server: gws
+	Content-Length: 27978
+	X-XSS-Protection: 0
+	X-Frame-Options: SAMEORIGIN
+	Set-Cookie: __Secure-STRP=ANmZwa08osj24cTL2eb27xMhvbpfubORdc72ihnBWT-v4NgIxmUmaMKK1lJz5K9y6OfCuj1b9HXuAYjdvjfTITwhcMlIWS_m-pB2; expires=Fri, 10-Jul-2026 10:35:54 GMT; path=/; domain=.google.com; Secure; SameSite=strict
+	Set-Cookie: AEC=AdJVEavB6wr0POXSo-tiu1X-jnaNEK9SaH7vPIAS3MeRJFjGdITBdCXYqQ; expires=Wed, 06-Jan-2027 10:30:54 GMT; path=/; domain=.google.com; Secure; HttpOnly; SameSite=lax
+	Set-Cookie: NID=533=R4v0V5NmYEeulaOmtXjF6WNMHq4j7vGSXZCcmQ823ooOuGTJlrXVa7V3MGt0asKROYb6ezji4X2feOhT47d_yrkAaQ2RkbtvUkAGNx_IhhlOTU4WGUnOiuUl1LqrriWZBCKc1PuxKQs9PtMc8KHew-ZJOxv-4TVe7BA5LWReL-zRICB4JqOjDUBce5QYfg3zUFGLQmd65VQ6HV08_HYpE90; expires=Sat, 09-Jan-2027 10:30:54 GMT; path=/; domain=.google.com; HttpOnly
+	Cache-Status: tg42cdec;detail=mismatch
+	Via: 1.1 tg42cdec (squid/6.9)
+	Connection: close
+	
+ifetcslab@ifetcslab-System-Product-Name:~$ whatweb -a 1 google.com
+http://google.com [301 Moved Permanently] Country[UNITED STATES][US], HTTPServer[gws], IP[142.250.77.142], RedirectLocation[http://www.google.com/], Title[301 Moved], UncommonHeaders[content-security-policy-report-only,cache-status], Via-Proxy[1.1 tg42cdec (squid/6.9)], X-Frame-Options[SAMEORIGIN], X-XSS-Protection[0]
+http://www.google.com/ [200 OK] Cookies[AEC,NID,__Secure-STRP], Country[UNITED STATES][US], HTML5, HTTPServer[gws], HttpOnly[AEC,NID], IP[142.251.155.119], Script, Title[Google], UncommonHeaders[content-security-policy-report-only,cache-status], Via-Proxy[1.1 tg42cdec (squid/6.9)], X-Frame-Options[SAMEORIGIN], X-XSS-Protection[0]
+
